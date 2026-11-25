@@ -34,6 +34,12 @@ addresses = ["203.0.113.0/24"]
     assert cfg.is_allowed("8.8.8.8") is False  # a real public address, not in the allow list
 
 
+def test_config_saved_by_windows_notepad_with_a_utf8_bom_still_loads(tmp_path):
+    p = tmp_path / "portcullis.toml"
+    p.write_bytes(b"\xef\xbb\xbf" + b"[detection]\nmax_failures = 7\n")
+    assert load_config(str(p)).detection.max_failures == 7
+
+
 def test_missing_file_gives_defaults():
     assert load_config(None).detection.max_failures == 5
 

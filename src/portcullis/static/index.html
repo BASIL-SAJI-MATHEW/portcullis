@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portcullis</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><img src="/static/favicon.svg" alt="" width="30" height="30"><span>Portcullis</span></div>
+    <span id="mode" class="badge">loading</span>
+    <span id="status" class="status" title="Connection to the Portcullis service">connecting</span>
+  </header>
+
+  <main>
+    <section class="cards" aria-label="Summary">
+      <div class="card"><span class="label">Active blocks</span><strong id="c-bans">0</strong></div>
+      <div class="card"><span class="label">Failed logins, 24h</span><strong id="c-fails">0</strong></div>
+      <div class="card"><span class="label">Unique attackers, 24h</span><strong id="c-attackers">0</strong></div>
+      <div class="card"><span class="label">Successful logins, 24h</span><strong id="c-wins">0</strong></div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Failed logins by hour</h2>
+      <div id="chart" class="chart" role="img" aria-label="Failed logins per hour for the last 24 hours"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Top attacking addresses</h2>
+      <ol id="top-ips" class="rank"></ol>
+    </section>
+    <section class="panel">
+      <h2>Most tried usernames</h2>
+      <ol id="top-users" class="rank"></ol>
+    </section>
+
+    <section class="panel wide">
+      <h2>Blocked addresses</h2>
+      <table>
+        <thead><tr><th>Address</th><th>Reason</th><th>Source</th><th>Expires</th><th></th></tr></thead>
+        <tbody id="bans"></tbody>
+      </table>
+      <p id="bans-empty" class="empty">Nothing is blocked right now.</p>
+      <p id="bans-more" class="empty" hidden></p>
+      <form id="ban-form" class="inline">
+        <input id="ban-ip" placeholder="Address to block, e.g. 203.0.113.9" autocomplete="off" required>
+        <input id="ban-hours" type="number" min="0" step="1" value="24" aria-label="Hours (0 means permanent)">
+        <button type="submit">Block</button>
+      </form>
+    </section>
+
+    <section class="panel wide">
+      <h2>Live activity</h2>
+      <table>
+        <thead><tr><th>Time</th><th>Address</th><th>User</th><th>Service</th><th>Result</th></tr></thead>
+        <tbody id="events"></tbody>
+      </table>
+    </section>
+
+    <section class="panel wide">
+      <h2>Never block these addresses</h2>
+      <ul id="allowed" class="allowed"></ul>
+      <form id="allow-form" class="inline">
+        <input id="allow-ip" placeholder="Your address, e.g. 198.51.100.4" autocomplete="off" required>
+        <input id="allow-note" placeholder="Note (optional)" autocomplete="off">
+        <button type="submit">Allow</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>Portcullis <span id="version"></span> &middot; open source, MIT licence</footer>
+  <p id="error" class="toast" role="alert" hidden></p>
+
+  <dialog id="auth">
+    <form id="auth-form" method="dialog">
+      <h2>Access token</h2>
+      <p>This dashboard is protected. Paste the token from your Portcullis config.</p>
+      <input id="auth-token" type="password" autocomplete="off" required>
+      <button type="submit">Continue</button>
+    </form>
+  </dialog>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

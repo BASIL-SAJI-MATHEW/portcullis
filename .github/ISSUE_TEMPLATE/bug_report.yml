@@ -1,0 +1,35 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Portcullis version
+      description: Output of `portcullis version`
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows, Ubuntu or Debian, RHEL or Fedora, Other Linux, Docker]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: sample
+    attributes:
+      label: A log line or event that was missed or mis-read (optional)
+      description: Remove usernames and addresses you do not want to share.
+      render: text
+  - type: textarea
+    id: logs
+    attributes:
+      label: Output of `portcullis run` (optional)
+      render: text

@@ -163,10 +163,12 @@ def load_config(path: str | None) -> Config:
     cfg = Config()
     if path:
         try:
-            with open(path, "rb") as fh:
-                raw = tomllib.load(fh)
+            with open(path, encoding="utf-8-sig") as fh:  # utf-8-sig: Notepad adds a BOM
+                raw = tomllib.loads(fh.read())
         except FileNotFoundError as exc:
             raise ConfigError(f"Config file not found: {path}") from exc
+        except UnicodeDecodeError as exc:
+            raise ConfigError(f"Config file must be UTF-8 text: {exc}") from exc
         except tomllib.TOMLDecodeError as exc:
             raise ConfigError(f"Config file is not valid TOML: {exc}") from exc
         sections = {f.name for f in fields(cfg)}

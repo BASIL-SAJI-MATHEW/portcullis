@@ -1,0 +1,13 @@
+# Linux hosts only. Host networking is required so Portcullis sees real client addresses and
+# edits the host's firewall. First run:  docker compose run --rm portcullis init --path /data/portcullis.toml
+services:
+  portcullis:
+    build: .
+    image: portcullis:local
+    network_mode: host        # the dashboard listens on the host's 127.0.0.1:8787
+    cap_add:
+      - NET_ADMIN             # lets it add and remove iptables rules
+    restart: unless-stopped
+    volumes:
+      - ./data:/data          # config and database
+      - /var/log:/var/log:ro  # so it can read auth.log or secure
