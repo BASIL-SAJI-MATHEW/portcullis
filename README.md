@@ -43,6 +43,8 @@ portcullis init          # writes portcullis.toml in observe mode
 portcullis run           # then open http://127.0.0.1:8787
 ```
 
+If a security policy on your machine blocks the `portcullis` launcher, `python -m portcullis` does the same thing.
+
 Want to see it before you trust it? Run the demo. It generates fake attackers and touches nothing real:
 
 ```bash
